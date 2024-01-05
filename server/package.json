@@ -1,118 +1,90 @@
 {
-  "name": "bill-split-fe",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@emotion/react": "^11.11.0",
-    "@emotion/styled": "^11.11.0",
-    "@fontsource/roboto": "^5.0.2",
-    "@mui/icons-material": "^5.11.16",
-    "@mui/material": "^5.13.3",
-    "axios": "^1.4.0",
-    "lodash": "^4.17.21",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-hook-form": "^7.44.3",
-    "react-router-dom": "^5.3.4",
-    "react-scripts": "5.0.1",
-    "styled-components": "^6.0.0-rc.3",
-    "web-vitals": "^2.1.4"
-  },
-  "scripts": {
-    "test": "jest",
-    "start": "webpack serve --config config/webpack.dev.js",
-    "build": "webpack --config config/webpack.prod.js",
-    "build-staging": "webpack --config config/webpack.stag.js",
-    "prettify": "yarn prettier \"**/*.*(js|jsx)\" --ignore-path=.prettierignore --write",
-    "lint": "eslint src --ext .js,.jsx && yarn prettify",
-    "lint-fix": "eslint src --ext .js,.jsx --fix && yarn prettify",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn lint-staged --verbose"
+    "name": "bill_split",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "create-migration": "knex --knexfile ./db/knexfile.js migrate:make",
+        "migrate": "knex --knexfile ./db/knexfile.js migrate:latest",
+        "rollback": "knex --knexfile ./db/knexfile.js migrate:rollback",
+        "rollback-all": "knex --knexfile ./db/knexfile.js migrate:rollback --all",
+        "test": "node_modules/.bin/nyc --clean node spec.js",
+        "lint": "eslint --ext .js --ignore-path .gitignore .",
+        "lint:fix": "npm run lint -- --fix"
+    },
+    "husky": {
+        "hooks": {
+            "pre-push": "npm run lint"
+        }
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@sentry/node": "^6.12.0",
+        "bcrypt": "^5.1.0",
+        "bee-queue": "^1.5.0",
+        "bluebird": "^3.7.2",
+        "bull-arena": "^3.30.4",
+        "convict": "^6.2.4",
+        "cookie-parser": "^1.4.5",
+        "cors": "^2.8.5",
+        "dotenv": "^16.3.1",
+        "eslint-plugin-import": "^2.24.2",
+        "express": "^4.17.1",
+        "express-async-handler": "^1.1.4",
+        "express-useragent": "^1.0.15",
+        "express-validator": "^6.14.2",
+        "ioredis": "^4.27.10",
+        "json2yaml": "^1.1.0",
+        "jsonwebtoken": "^9.0.0",
+        "kafkajs": "^1.15.0",
+        "kafkajs-lz4": "^2.0.0-beta.0",
+        "knex": "^2.4.2",
+        "ncp": "^2.0.0",
+        "newrelic": "^8.3.0",
+        "node-cron": "^3.0.2",
+        "nodemailer": "^6.9.3",
+        "objection": "^3.0.1",
+        "pg": "^8.7.1",
+        "prom-file-client": "0.0.13",
+        "swagger-jsdoc": "^6.1.0",
+        "url-join": "^5.0.0",
+        "winston": "^3.3.3"
+    },
+    "devDependencies": {
+        "eslint": "^7.32.0",
+        "eslint-config-airbnb": "^18.2.1",
+        "eslint-config-prettier": "^8.3.0",
+        "eslint-plugin-prettier": "^4.0.0",
+        "husky": "^4.3.8",
+        "jasmine": "^3.9.0",
+        "jasmine-console-reporter": "^3.1.0",
+        "nyc": "^15.1.0",
+        "prettier": "^2.4.1",
+        "sinon": "^11.1.2",
+        "supertest": "^6.1.6"
+    },
+    "nyc": {
+        "all": true,
+        "check-coverage": true,
+        "collectCoverage": true,
+        "include": [
+            "app/**"
+        ],
+        "exclude": [
+            "spec/**",
+            "db/**",
+            "load-test/**",
+            "tools/**",
+            "app/server/migration/**",
+            "app/server/models/swagger/**"
+        ],
+        "reporter": [
+            "html",
+            "json-summary",
+            "text-summary"
+        ],
+        "report-dir": "./coverage"
     }
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "resolutions": {
-    "styled-components": "^5"
-  },
-  "lint-staged": {
-    "*.{js,jsx}": [
-      "eslint --fix"
-    ]
-  },
-  "jest": {
-    "testEnvironment": "jsdom",
-    "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
-      "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
-    }
-  },
-  "devDependencies": {
-    "@babel/core": "^7.18.5",
-    "@babel/plugin-proposal-class-properties": "^7.17.12",
-    "@babel/plugin-transform-runtime": "^7.18.5",
-    "@babel/preset-env": "^7.18.2",
-    "@babel/preset-react": "^7.17.12",
-    "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
-    "@svgr/webpack": "^5.5.0",
-    "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^12.0.0",
-    "@testing-library/user-event": "^13.2.1",
-    "autoprefixer": "^10.4.7",
-    "babel-eslint": "^10.1.0",
-    "babel-jest": "^27.0.6",
-    "babel-loader": "^8.2.5",
-    "clean-webpack-plugin": "*",
-    "copy-webpack-plugin": "^9.0.1",
-    "cross-env": "^7.0.3",
-    "css-loader": "^6.7.1",
-    "css-minimizer-webpack-plugin": "^3.0.2",
-    "dotenv-webpack": "^7.1.0",
-    "eslint": "^7.32.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-import-resolver-alias": "^1.1.2",
-    "eslint-plugin-babel": "^5.3.1",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-prettier": "^3.4.0",
-    "eslint-plugin-react": "^7.30.0",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "html-webpack-plugin": "^5.5.0",
-    "husky": "^7.0.1",
-    "jest": "^27.0.6",
-    "lint-staged": "^11.1.2",
-    "mini-css-extract-plugin": "^2.6.1",
-    "node-sass": "^6.0.1",
-    "postcss": "^8.4.14",
-    "postcss-import": "^14.1.0",
-    "postcss-loader": "^6.1.1",
-    "prettier": "^2.7.1",
-    "react-refresh": "^0.9.0",
-    "sass-loader": "^12.1.0",
-    "style-loader": "^3.3.1",
-    "terser-webpack-plugin": "^5.3.3",
-    "webpack": "^5.73.0",
-    "webpack-cli": "^4.10.0",
-    "webpack-dev-server": "^3.11.2",
-    "webpack-merge": "^5.8.0"
-  }
 }
