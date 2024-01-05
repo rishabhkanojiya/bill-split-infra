@@ -5,8 +5,9 @@ WORKDIR /srv/bill-split-fe
 
 COPY package.json .
 COPY package-lock.json .
-RUN yarn install
+# RUN yarn install
+RUN npm install
 
 COPY . .
 
-CMD ["sh", "-c", "yarn start"]
+CMD ["sh", "-c", "npm start"]

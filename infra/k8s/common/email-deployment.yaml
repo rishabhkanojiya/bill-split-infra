@@ -1,33 +1,33 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: email-deployment
+  name: email-deployment
 spec:
-    replicas: 1
-    selector:
-        matchLabels:
-            app: email
-    template:
-        metadata:
-            labels:
-                app: email
-        spec:
-            containers:
-                - name: email
-                  image: rishabh75/billsplit-email
-                  envFrom:
-                      - configMapRef:
-                            name: internal-config
-                      - secretRef:
-                            name: common-secrets
-                  env:
-                      - name: MODE
-                        value: "worker"
-                      - name: SERVER_TYPE
-                        value: "email"
-                      - name: WORKER_TYPE
-                        value: "email"
-                      - name: QUEUE_NAME
-                        value: "EMAIL_WORKER_QUEUE_1"
-                      - name: WORKER_CONCURRENCY
-                        value: "5"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: email
+  template:
+    metadata:
+      labels:
+        app: email
+    spec:
+      containers:
+        - name: email
+          image: rishabh75/billsplit-email
+          envFrom:
+            - configMapRef:
+                name: internal-config
+            - secretRef:
+                name: common-secrets
+          env:
+            - name: MODE
+              value: "worker"
+            - name: SERVER_TYPE
+              value: "email"
+            - name: WORKER_TYPE
+              value: "email"
+            - name: QUEUE_NAME
+              value: "EMAIL_WORKER_QUEUE_1"
+            - name: WORKER_CONCURRENCY
+              value: "5"

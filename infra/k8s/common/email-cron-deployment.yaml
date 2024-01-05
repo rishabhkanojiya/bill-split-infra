@@ -1,28 +1,28 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-    name: email-cron-job
+  name: email-cron-job
 spec:
-    schedule: "*/30 * * * *" # Adjust the schedule according to your needs
-    successfulJobsHistoryLimit: 3 # Number of successful jobs to keep
-    failedJobsHistoryLimit: 1 # Number of failed jobs to keep
-    concurrencyPolicy: Replace
-    jobTemplate:
+  schedule: "*/30 * * * *" # Adjust the schedule according to your needs
+  successfulJobsHistoryLimit: 3 # Number of successful jobs to keep
+  failedJobsHistoryLimit: 1 # Number of failed jobs to keep
+  concurrencyPolicy: Replace
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: email-cron
         spec:
-            template:
-                metadata:
-                    labels:
-                        app: email-cron
-                spec:
-                    containers:
-                        - name: email-cron
-                          image: rishabh75/billsplit-email-cron
-                          envFrom:
-                              - configMapRef:
-                                    name: internal-config
-                              - secretRef:
-                                    name: common-secrets
-                          env:
-                              - name: MODE
-                                value: "cron"
-                    restartPolicy: OnFailure
+          containers:
+            - name: email-cron
+              image: rishabh75/billsplit-email-cron
+              envFrom:
+                - configMapRef:
+                    name: internal-config
+                - secretRef:
+                    name: common-secrets
+              env:
+                - name: MODE
+                  value: "cron"
+          restartPolicy: OnFailure
