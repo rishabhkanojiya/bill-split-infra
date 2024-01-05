@@ -1,0 +1,91 @@
+{
+  "components": {
+    "responses": {
+      "Unauthorized": {
+        "description": "Unauthorized Access",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/UnauthorizedSchema"
+            }
+          }
+        }
+      },
+      "Unauthenticated": {
+        "description": "Unauthenticated Access",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/UnauthenticatedSchema"
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Resource Not Found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/NotFoundSchema"
+            }
+          }
+        }
+      },
+      "AuthenticationInternalServerError": {
+        "description": "Internal Server Error. See the error object in the response body to know the exact reason.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/AuthenticationInternalServerErrorSchema"
+            }
+          }
+        }
+      },
+      "AuthenticationApiError": {
+        "description": "API error. See the error object in the response body to know the exact reason.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/AuthenticationApiErrorSchema"
+            }
+          }
+        }
+      }
+    },
+    "examples": {
+      "UserExampleObject": {
+        "value": {
+          "user": {
+            "active": true,
+            "profile_pic_url": "https://d2co8r51m5ca2d.cloudfront.net/inapp_banners/default_profile_img.png",
+            "_id": "5e68af49cfa09bf7233022f1",
+            "first_name": "Akash",
+            "last_name": "Mane",
+            "username": "akashmane_gofynd_com_10039",
+            "email": "akashmane@gofynd.com",
+            "createdAt": "2020-03-11T09:28:41.982Z",
+            "updatedAt": "2021-02-04T10:10:44.981Z"
+          }
+        }
+      },
+      "SuccessExample": {
+        "value": {
+          "success": true
+        }
+      }
+    },
+    "schemas": {
+      "Hello": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "message": "hello world"
+        }
+      }
+    }
+  }
+}

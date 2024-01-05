@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: internal-deployment
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: internal
+    template:
+        metadata:
+            labels:
+                app: internal
+        spec:
+            containers:
+                - name: internal
+                  image: rishabh75/billsplit-internal
+                  envFrom:
+                      - configMapRef:
+                            name: internal-config
+                      - secretRef:
+                            name: common-secrets
+                  env:
+                      - name: MODE
+                        value: "server"
+                      - name: SERVER_TYPE
+                        value: "internal"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: internal-svc
+spec:
+    selector:
+        app: internal
+    ports:
+        - name: internal
+          protocol: TCP
+          port: 9069
+          targetPort: 9069

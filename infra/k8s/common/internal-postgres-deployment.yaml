@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: internal-postgres-deployment
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: internal-postgres
+    template:
+        metadata:
+            labels:
+                app: internal-postgres
+        spec:
+            containers:
+                - name: internal-postgres
+                  image: postgres:14.10-alpine3.19
+                  env:
+                      - name: POSTGRES_USER
+                        value: "root"
+                      - name: POSTGRES_PASSWORD
+                        value: "root"
+                      - name: POSTGRES_DB
+                        value: "bill-split"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: internal-postgres-svc
+spec:
+    selector:
+        app: internal-postgres
+    ports:
+        - name: db
+          protocol: TCP
+          port: 5432
+          targetPort: 5432

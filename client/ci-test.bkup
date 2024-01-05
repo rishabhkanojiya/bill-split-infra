@@ -1,0 +1,25 @@
+if test "$DEBUG" != "true"
+then
+    apk add binutils-gold curl gnupg libgcc linux-headers python lcms2-dev libpng-dev autoconf automake
+    curl -s "https://gitlab.com/api/v4/projects/9905046/repository/files/gitlab%2Fsetup_key.sh/raw?ref=master&private_token=FjCQxPFMNXJwmaomMoKi" 2>&1 | sh
+    ssh-keyscan -t rsa gitlab.com >> ~/.ssh/known_hosts
+fi
+
+export POSTGRES_RUPIKA_READ_WRITE="postgres://runner@${POSTGRES_HOST}:${POSTGRES_PORT}/defaultdb"
+export NODE_ENV="test"
+export MODE="server"
+export SERVER_TYPE="internal"
+
+if test "$DEBUG" != "true"
+then
+    NODE_ENV="" bash -c 'npm install'
+fi
+
+npm run migrate
+
+rm -rf .nyc_output
+rm -rf coverage
+mkdir coverage
+node_modules/.bin/nyc --clean node spec.js
+
+node tools/coverage_output.js

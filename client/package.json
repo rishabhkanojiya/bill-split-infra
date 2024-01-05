@@ -1,0 +1,90 @@
+{
+    "name": "bill_split",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "create-migration": "knex --knexfile ./db/knexfile.js migrate:make",
+        "migrate": "knex --knexfile ./db/knexfile.js migrate:latest",
+        "rollback": "knex --knexfile ./db/knexfile.js migrate:rollback",
+        "rollback-all": "knex --knexfile ./db/knexfile.js migrate:rollback --all",
+        "test": "node_modules/.bin/nyc --clean node spec.js",
+        "lint": "eslint --ext .js --ignore-path .gitignore .",
+        "lint:fix": "npm run lint -- --fix"
+    },
+    "husky": {
+        "hooks": {
+            "pre-push": "npm run lint"
+        }
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@sentry/node": "^6.12.0",
+        "bcrypt": "^5.1.0",
+        "bee-queue": "^1.5.0",
+        "bluebird": "^3.7.2",
+        "bull-arena": "^3.30.4",
+        "convict": "^6.2.4",
+        "cookie-parser": "^1.4.5",
+        "cors": "^2.8.5",
+        "dotenv": "^16.3.1",
+        "eslint-plugin-import": "^2.24.2",
+        "express": "^4.17.1",
+        "express-async-handler": "^1.1.4",
+        "express-useragent": "^1.0.15",
+        "express-validator": "^6.14.2",
+        "ioredis": "^4.27.10",
+        "json2yaml": "^1.1.0",
+        "jsonwebtoken": "^9.0.0",
+        "kafkajs": "^1.15.0",
+        "kafkajs-lz4": "^2.0.0-beta.0",
+        "knex": "^2.4.2",
+        "ncp": "^2.0.0",
+        "newrelic": "^8.3.0",
+        "node-cron": "^3.0.2",
+        "nodemailer": "^6.9.3",
+        "objection": "^3.0.1",
+        "pg": "^8.7.1",
+        "prom-file-client": "0.0.13",
+        "swagger-jsdoc": "^6.1.0",
+        "url-join": "^5.0.0",
+        "winston": "^3.3.3"
+    },
+    "devDependencies": {
+        "eslint": "^7.32.0",
+        "eslint-config-airbnb": "^18.2.1",
+        "eslint-config-prettier": "^8.3.0",
+        "eslint-plugin-prettier": "^4.0.0",
+        "husky": "^4.3.8",
+        "jasmine": "^3.9.0",
+        "jasmine-console-reporter": "^3.1.0",
+        "nyc": "^15.1.0",
+        "prettier": "^2.4.1",
+        "sinon": "^11.1.2",
+        "supertest": "^6.1.6"
+    },
+    "nyc": {
+        "all": true,
+        "check-coverage": true,
+        "collectCoverage": true,
+        "include": [
+            "app/**"
+        ],
+        "exclude": [
+            "spec/**",
+            "db/**",
+            "load-test/**",
+            "tools/**",
+            "app/server/migration/**",
+            "app/server/models/swagger/**"
+        ],
+        "reporter": [
+            "html",
+            "json-summary",
+            "text-summary"
+        ],
+        "report-dir": "./coverage"
+    }
+}

@@ -1,0 +1,605 @@
+tags:
+    - name: Datasources
+      description: Everything about datasources
+    - name: Zones
+      description: Everything about zones
+
+paths:
+    /datasources/type/{datasourceType}:
+        get:
+            description: Get datasource UI schema
+            summary: Get datasource UI schema
+            operationId: getDatasourceType
+            tags:
+                - Datasources
+            parameters:
+                - $ref: "#/components/parameters/datasourceType_Parameter"
+            responses:
+                200:
+                    description: Success
+                    content:
+                        application/json:
+                            examples:
+                                GetDatasourceTypeSuccess_Response_Example:
+                                    $ref: "#/components/examples/GetDatasourceTypeSuccess_Response_Example"
+                401:
+                    $ref: "#/components/responses/Unauthorized_Response"
+                404:
+                    $ref: "#/components/responses/NotFound_Response"
+    /datasources:
+        get:
+            description: Get all datasources
+            summary: Get all datasources
+            operationId: getAllDatasources
+            tags:
+                - Datasources
+            parameters:
+                - $ref: "#/components/parameters/pageNo_Parameter"
+                - $ref: "#/components/parameters/pageSize_Parameter"
+                - $ref: "#/components/parameters/searchName_Parameter"
+            responses:
+                200:
+                    description: Success
+                    content:
+                        application/json:
+                            examples:
+                                GetDatasourcesSuccess_Response_Example:
+                                    $ref: "#/components/examples/GetDatasourcesSuccess_Response_Example"
+                401:
+                    $ref: "#/components/responses/Unauthorized_Response"
+                404:
+                    $ref: "#/components/responses/NotFound_Response"
+        post:
+            description: Create datasource
+            summary: Create datasource
+            operationId: createDatasource
+            tags:
+                - Datasources
+            requestBody:
+                $ref: "#/components/requestBodies/Datasource_RequestBody"
+            responses:
+                200:
+                    description: Success
+                    content:
+                        application/json:
+                            examples:
+                                CreateDatasourceSuccess_Response_Example:
+                                    $ref: "#/components/examples/CreateDatasourceSuccess_Response_Example"
+                401:
+                    $ref: "#/components/responses/Unauthorized_Response"
+                404:
+                    $ref: "#/components/responses/NotFound_Response"
+    /datasources/{datasourceId}:
+        get:
+            description: Get datasource
+            summary: Get datasource
+            operationId: getDatasource
+            tags:
+                - Datasources
+            parameters:
+                - $ref: "#/components/parameters/datasourceId_Parameter"
+            responses:
+                200:
+                    description: Success
+                    content:
+                        application/json:
+                            examples:
+                                GetDatasourceSuccess_Response_Example:
+                                    $ref: "#/components/examples/GetDatasourceSuccess_Response_Example"
+                401:
+                    $ref: "#/components/responses/Unauthorized_Response"
+                404:
+                    $ref: "#/components/responses/NotFound_Response"
+        patch:
+            description: Update datasource
+            summary: Update datasource
+            operationId: updateDatasource
+            tags:
+                - Datasources
+            parameters:
+                - $ref: "#/components/parameters/datasourceId_Parameter"
+            requestBody:
+                $ref: "#/components/requestBodies/Datasource_RequestBody"
+            responses:
+                200:
+                    description: Success
+                    content:
+                        application/json:
+                            examples:
+                                UpdateDatasourceSuccess_Response_Example:
+                                    $ref: "#/components/examples/UpdateDatasourceSuccess_Response_Example"
+                401:
+                    $ref: "#/components/responses/Unauthorized_Response"
+                404:
+                    $ref: "#/components/responses/NotFound_Response"
+        delete:
+            description: Delete datasource
+            summary: Delete datasource
+            operationId: deleteDatasource
+            tags:
+                - Datasources
+            parameters:
+                - $ref: "#/components/parameters/datasourceId_Parameter"
+            responses:
+                200:
+                    description: Success
+                    content:
+                        application/json:
+                            examples:
+                                DeleteDatasourceSuccess_Response_Example:
+                                    $ref: "#/components/examples/DeleteDatasourceSuccess_Response_Example"
+                401:
+                    $ref: "#/components/responses/Unauthorized_Response"
+                404:
+                    $ref: "#/components/responses/NotFound_Response"
+
+    /zones:
+        get:
+            description: Get all zones
+            summary: Get all zones
+            operationId: getAllZones
+            tags:
+                - Zones
+            parameters:
+                - $ref: "#/components/parameters/pageNo_Parameter"
+                - $ref: "#/components/parameters/pageSize_Parameter"
+                - $ref: "#/components/parameters/searchName_Parameter"
+            responses:
+                200:
+                    description: Success
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Zones"
+                            examples:
+                                GetZonesSuccess_Response_Example:
+                                    $ref: "#/components/examples/GetZonesSuccess_Response_Example"
+                401:
+                    $ref: "#/components/responses/Unauthorized_Response"
+                404:
+                    $ref: "#/components/responses/NotFound_Response"
+
+        post:
+            description: Create zone
+            summary: Create zone
+            operationId: createZone
+            tags:
+                - Zones
+            requestBody:
+                $ref: "#/components/requestBodies/Zone_RequestBody"
+            responses:
+                200:
+                    description: Success
+                    content:
+                        application/json:
+                            examples:
+                                CreateZoneSuccess_Response_Example:
+                                    $ref: "#/components/examples/CreateZoneSuccess_Response_Example"
+                401:
+                    $ref: "#/components/responses/Unauthorized_Response"
+                404:
+                    $ref: "#/components/responses/NotFound_Response"
+    /zones/{zoneId}:
+        get:
+            description: Get zone
+            summary: Get zone
+            operationId: getZone
+            tags:
+                - Zones
+            parameters:
+                - $ref: "#/components/parameters/zoneId_Parameter"
+            responses:
+                200:
+                    description: Success
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Zone"
+                            examples:
+                                GetZoneSuccess_Response_Example:
+                                    $ref: "#/components/examples/GetZoneSuccess_Response_Example"
+                401:
+                    $ref: "#/components/responses/Unauthorized_Response"
+                404:
+                    $ref: "#/components/responses/NotFound_Response"
+        patch:
+            description: Update zone
+            summary: Update zone
+            operationId: updateZone
+            tags:
+                - Zones
+            parameters:
+                - $ref: "#/components/parameters/zoneId_Parameter"
+            requestBody:
+                $ref: "#/components/requestBodies/Zone_RequestBody"
+            responses:
+                200:
+                    description: Success
+                    content:
+                        application/json:
+                            examples:
+                                UpdateZoneSuccess_Response_Example:
+                                    $ref: "#/components/examples/UpdateZoneSuccess_Response_Example"
+                401:
+                    $ref: "#/components/responses/Unauthorized_Response"
+                404:
+                    $ref: "#/components/responses/NotFound_Response"
+        delete:
+            description: Delete zone
+            summary: Delete zone
+            operationId: deleteZone
+            tags:
+                - Zones
+            parameters:
+                - $ref: "#/components/parameters/zoneId_Parameter"
+            responses:
+                200:
+                    description: Success
+                    content:
+                        application/json:
+                            examples:
+                                DeleteZoneSuccess_Response_Example:
+                                    $ref: "#/components/examples/DeleteZoneSuccess_Response_Example"
+                401:
+                    $ref: "#/components/responses/Unauthorized_Response"
+                404:
+                    $ref: "#/components/responses/NotFound_Response"
+
+components:
+    schemas:
+        DatasourceField:
+            type: object
+            properties:
+                id:
+                    type: string
+                description:
+                    type: string
+                displayName:
+                    type: string
+                type:
+                    type: string
+                validations:
+                    type: object
+        Page:
+            type: object
+            properties:
+                type:
+                    type: string
+                size:
+                    type: integer
+                    format: int32
+                current:
+                    type: integer
+                    format: int32
+                hasNext:
+                    type: boolean
+                itemTotal:
+                    type: integer
+                    format: int32
+        Datasource:
+            properties:
+                _id:
+                    type: integer
+                name:
+                    type: string
+                type:
+                    type: string
+                    enum: [url, s3, dropbox, google-drive]
+                credentials:
+                    type: object
+        Zone:
+            properties:
+                _id:
+                    type: integer
+                name:
+                    type: string
+                orgId:
+                    type: integer
+                createdAt:
+                    type: string
+                updatedAt:
+                    type: string
+                isActive:
+                    type: boolean
+                path:
+                    type: string
+                webOptimized:
+                    type: integer
+                datasourceId:
+                    type: integer
+                datasource:
+                    $ref: "#/components/schemas/Datasource"
+        Zones:
+            properties:
+                page:
+                    $ref: "#/components/schemas/Page"
+                items:
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/Zone"
+        Datasources:
+            properties:
+                page:
+                    $ref: "#/components/schemas/Page"
+                items:
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/Datasource"
+        Error:
+            properties:
+                message:
+                    type: string
+                status:
+                    type: integer
+                    format: int32
+                code:
+                    type: string
+                exception:
+                    type: string
+                info:
+                    type: string
+                stackTrace:
+                    type: string
+                meta:
+                    type: object
+
+    parameters:
+        pageNo_Parameter:
+            name: pageNo
+            in: query
+            description: Page number
+            required: false
+            schema:
+                type: integer
+                format: int32
+                default: 1
+        pageSize_Parameter:
+            name: pageSize
+            in: query
+            description: Page size
+            required: false
+            schema:
+                type: integer
+                format: int32
+                default: 10
+        searchName_Parameter:
+            name: searchName
+            in: query
+            description: Name search
+            required: false
+            schema:
+                type: string
+        zoneId_Parameter:
+            name: zoneId
+            in: path
+            description: Zone id
+            required: true
+            schema:
+                type: string
+        datasourceId_Parameter:
+            name: datasourceId
+            in: path
+            description: Datasource id
+            required: true
+            schema:
+                type: string
+        datasourceType_Parameter:
+            name: datasourceType
+            in: path
+            description: Datasource type
+            required: true
+            schema:
+                type: string
+                enum: [url, s3, dropbox, google-drive]
+
+    requestBodies:
+        Datasource_RequestBody:
+            description: A JSON object containing datasource information
+            required: true
+            content:
+                application/json:
+                    schema:
+                        properties:
+                            name:
+                                type: string
+                            type:
+                                type: string
+                                enum: ['url', 's3', 'dropbox', 'google-drive']
+                            credentials:
+                                type: object
+                    examples:
+                        CreateDatasource_RequestBody_Example:
+                            $ref: "#/components/examples/Datasource_RequestBody_Example"
+        Zone_RequestBody:
+            description: A JSON object containing zone information
+            required: true
+            content:
+                application/json:
+                    schema:
+                        properties:
+                            name:
+                                type: string
+                            isActive:
+                                type: boolean
+                            path:
+                                type: string
+                            webOptimized:
+                                type: boolean
+                            datasourceId:
+                                type: string
+                    examples:
+                        CreateZone_RequestBody_Example:
+                            $ref: "#/components/examples/Zone_RequestBody_Example"
+
+    responses:
+        NotFound_Response:
+            description: The specified resource was not found
+            content:
+                application/json:
+                    schema:
+                        $ref: "#/components/schemas/Error"
+        Unauthorized_Response:
+            description: Unauthorized_Response
+            content:
+                application/json:
+                    schema:
+                        $ref: "#/components/schemas/Error"
+
+    examples:
+        GetDatasourceTypeSuccess_Response_Example:
+            value:
+                -
+                    id: url
+                    description: A base URL where images can be accessed
+                    displayName: url
+                    type: url
+                    validations:
+                        required: true
+                        maxLength: 255
+        GetDatasourceSuccess_Response_Example:
+            value:
+                _id: 1
+                orgId: 1
+                createdAt: '2021-12-29T04:04:07.760Z'
+                updatedAt: '2021-12-29T04:04:07.760Z'
+                name: url-home
+                type: url
+                credentials:
+                    url: https://www.erase.bg
+        GetDatasourcesSuccess_Response_Example:
+            value:
+                page:
+                    type: number
+                    size: 1
+                    current: 1
+                    hasNext: false
+                    itemTotal: 1
+                items:
+                    -
+                        _id: 1
+                        orgId: 1
+                        createdAt: '2021-12-29T04:04:07.760Z'
+                        updatedAt: '2021-12-29T04:04:07.760Z'
+                        name: url-home
+                        type: url
+                        credentials:
+                            url: https://www.erase.bg
+        Datasource_RequestBody_Example:
+            value:
+                name: url-home
+                type: url
+                credentials:
+                    url: https://www.erase.bg
+        CreateDatasourceSuccess_Response_Example:
+            value:
+                message: Created new datasource
+                datasource:
+                    _id: 1
+                    orgId: 1
+                    name: url-home
+                    type: url
+                    createdAt: 2021-12-29T04:04:07.760Z
+                    updatedAt: 2021-12-29T04:04:07.760Z
+                    credentials:
+                        url: 85cb35669fbcb1ed92d5a757cabbf5a6163ae844ed69b197417b9fd49602bf55
+        UpdateDatasourceSuccess_Response_Example:
+            value:
+                message: Updated datasource
+                datasource:
+                    _id: 1
+                    orgId: 1
+                    name: url-home
+                    type: url
+                    createdAt: 2021-12-29T07:22:37.416Z
+                    updatedAt: 2021-12-29T04:04:07.760Z
+                    credentials:
+                        url: 85cb35669fbcb1ed92d5a757cabbf5a6163ae844ed69b197417b9fd49602bf55
+        DeleteDatasourceSuccess_Response_Example:
+            value:
+                message: Successfully deleted datasource and all related data
+
+        GetZoneSuccess_Response_Example:
+            value:
+                _id: 1
+                createdAt: '2021-12-29T07:32:30.091Z'
+                updatedAt: '2021-12-29T07:32:30.091Z'
+                isActive: true
+                name: url-zone
+                orgId: 1
+                path: inner-folder
+                webOptimized: false
+                datasourceId: 1
+                datasource:
+                    _id: 1
+                    orgId: 1
+                    createdAt: '2021-12-29T07:32:21.370Z'
+                    updatedAt: '2021-12-29T07:32:21.370Z'
+                    name: url-home
+                    type: url
+                    credentials:
+                        url: https://www.erase.bg
+        GetZonesSuccess_Response_Example:
+            value:
+                page:
+                    type: number
+                    size: 1
+                    current: 1
+                    hasNext: false
+                    itemTotal: 1
+                items:
+                    -
+                        _id: 1
+                        createdAt: '2021-12-29T07:32:30.091Z'
+                        updatedAt: '2021-12-29T07:32:30.091Z'
+                        isActive: true
+                        name: url-zone
+                        orgId: 1
+                        path: inner-folder
+                        webOptimized: false
+                        datasourceId: 1
+                        datasource:
+                            _id: 1
+                            orgId: 1
+                            createdAt: '2021-12-29T07:32:21.370Z'
+                            updatedAt: '2021-12-29T07:32:21.370Z'
+                            name: url-home
+                            type: url
+                            credentials:
+                                url: https://www.erase.bg
+        Zone_RequestBody_Example:
+            value:
+                name: url-zone
+                isActive: true
+                path: inner-folder
+                webOptimized: false
+                datasourceId: 1
+        CreateZoneSuccess_Response_Example:
+            value:
+                message: Created new zone
+                Zone:
+                    orgId: 1
+                    name: url-zone
+                    isActive: true
+                    path: inner-folder
+                    webOptimized: false
+                    datasourceId: 1
+                    createdAt: '2021-12-29T07:32:30.091Z'
+                    updatedAt: '2021-12-29T07:32:30.091Z'
+                    _id: 1
+        UpdateZoneSuccess_Response_Example:
+            value:
+                message: Updated zone
+                zone:
+                    orgId: 1
+                    name: url-zone-name-udpated
+                    isActive: true
+                    path: inner-folder
+                    webOptimized: false
+                    datasourceId: 1
+                    createdAt: '2021-12-29T17:32:30.091Z'
+                    updatedAt: '2021-12-29T07:32:30.091Z'
+                    _id: 1
+        DeleteZoneSuccess_Response_Example:
+            value:
+                message: Successfully deleted zone and all related data
+

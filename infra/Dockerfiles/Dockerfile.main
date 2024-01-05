@@ -1,0 +1,13 @@
+FROM node:14-alpine
+
+RUN mkdir /srv/bill-split
+WORKDIR /srv/bill-split
+
+COPY package.json .
+COPY package-lock.json .
+RUN npm install
+
+COPY . .
+
+RUN echo "Running Main Dockerfile"
+CMD ["sh", "-c", "npm run migrate && node index.js"]
