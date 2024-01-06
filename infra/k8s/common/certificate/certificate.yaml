@@ -1,0 +1,14 @@
+apiVersion: cert-manager.io/v1
+
+kind: Certificate
+metadata:
+  name: billsplit-app-tls
+spec:
+  secretName: billsplit-app
+  issuerRef:
+    name: issuer-config
+    kind: ClusterIssuer
+  commonName: billsplit.app
+  dnsNames:
+    - billsplit.app
+    - www.billsplit.app
