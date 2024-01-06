@@ -10,4 +10,5 @@ RUN npm install
 COPY . .
 
 RUN echo "Running Main Dockerfile"
-CMD ["sh", "-c", "npm run migrate && node index.js"]
+CMD ["sh", "-c", "node index.js"]
+# CMD ["sh", "-c", "npm run migrate && node index.js"]

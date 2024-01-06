@@ -152,6 +152,8 @@ const UsersHandler = {
             res.cookie("token", token, {
                 expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
                 httpOnly: false,
+                sameSite: 'none',
+                secure: true,
             });
 
             res.json({ success: true, user });
