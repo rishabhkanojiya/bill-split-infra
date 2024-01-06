@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: client
+  template:
+    metadata:
+      labels:
+        app: client
+    spec:
+      containers:
+        - name: client
+          image: rishabh75/billsplit-client
+          env:
+            - name: API_URL
+              value: "https://billsplit.app/api/main"
+          ports:
+            - containerPort: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: client-svc
+spec:
+  selector:
+    app: client
+  ports:
+    - name: client
+      protocol: TCP
+      port: 80
+      targetPort: 80

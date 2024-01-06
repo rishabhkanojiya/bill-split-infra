@@ -27,24 +27,3 @@ spec:
                 name: client-svc
                 port:
                   number: 3000
-# ---
-# apiVersion: networking.k8s.io/v1
-# kind: Ingress
-# metadata:
-#   name: ingress-svc
-#   annotations:
-#     nginx.ingress.kubernetes.io/use-regex: "true"
-
-# spec:
-#   ingressClassName: nginx
-#   rules:
-#     - host: billsplit.app
-#       http:
-#         paths:
-#           - path: /?(.*)
-#             pathType: ImplementationSpecific
-#             backend:
-#               service:
-#                 name: client-svc
-#                 port:
-#                   number: 3000

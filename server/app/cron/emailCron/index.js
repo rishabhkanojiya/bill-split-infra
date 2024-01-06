@@ -4,10 +4,10 @@ const logger = require("../../../logger");
 
 async function run() {
     try {
-        // const schedule = "* 11 * * *";
+        const schedule = "* 11 * * *";
         // const schedule = "* * * * *";
         // const schedule = "43 18 * * *";
-        const schedule = "*/30 * * * * *";
+        // const schedule = "*/30 * * * * *";
 
         cron.schedule(schedule, () =>
             GroupsHandler.checkAndSendPaymentReminders()

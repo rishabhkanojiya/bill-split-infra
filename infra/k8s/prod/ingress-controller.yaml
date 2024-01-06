@@ -26,4 +26,4 @@ spec:
               service:
                 name: client-svc
                 port:
-                  number: 3000
+                  number: 80

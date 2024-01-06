@@ -6,6 +6,8 @@ import routes from "./Routes";
 import AuthGuard from "./Guard/Auth";
 import { Suspense } from "react";
 
+console.log({API_URL: process.env});
+
 const darkTheme = createTheme({
   palette: {
     mode: "dark",
