@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: client
-          image: rishabh75/billsplit-client
+          image: rishabh75/billsplit-client-prod
           env:
             - name: API_URL
               value: "https://billsplit.app/api/main"

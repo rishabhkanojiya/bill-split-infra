@@ -1,0 +1,52 @@
+apiVersion: skaffold/v2beta4
+kind: Config
+profiles:
+  - name: dev
+    deploy:
+      kubectl:
+        manifests:
+          - ../k8s/common/*
+          - ../k8s/dev/*
+  - name: prod
+    deploy:
+      kubectl:
+        manifests:
+          - ../k8s/common/*
+          - ../k8s/certificate/*
+          - ../k8s/prod/*
+build:
+  local:
+    push: false
+  artifacts:
+    - image: rishabh75/billsplit-internal
+      context: ..\..\server\
+      docker:
+        dockerfile: ../Dockerfiles/Dockerfile.main
+      sync:
+        manual:
+          - src: "src/**/*.js"
+            dest: .
+    - image: rishabh75/billsplit-email
+      context: ../../server/
+      docker:
+        dockerfile: ../Dockerfiles/Dockerfile.email
+      sync:
+        manual:
+          - src: "src/**/*.js"
+            dest: .
+    - image: rishabh75/billsplit-email-cron
+      context: ../../server/
+      docker:
+        dockerfile: ../Dockerfiles/Dockerfile.cron
+      sync:
+        manual:
+          - src: "src/**/*.js"
+            dest: .
+    - image: rishabh75/billsplit-client
+      context: ../../client/
+      docker:
+        dockerfile: ../Dockerfiles/Dockerfile.client-prod
+      sync:
+        manual:
+          - src: "src/**/*.js"
+            dest: .

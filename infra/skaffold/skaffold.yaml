@@ -1,52 +1,108 @@
-apiVersion: skaffold/v2beta4
+apiVersion: skaffold/v4beta8
 kind: Config
-profiles:
-  - name: dev
-    deploy:
-      kubectl:
-        manifests:
-          - ../k8s/common/*
-          - ../k8s/dev/*
-  - name: prod
-    deploy:
-      kubectl:
-        manifests:
-          - ../k8s/common/*
-          - ../k8s/certificate/*
-          - ../k8s/prod/*
-build:
-  local:
-    push: false
-  artifacts:
-    - image: rishabh75/billsplit-internal
+
+.COMMON_ARTIFACTS:
+  ARTIFACTS_DEFINITION:
+    - &INTERNAL
+      image: rishabh75/billsplit-internal
       context: ..\..\server\
+      sync:
+        manual:
+          - src: src/**/*.js
+            dest: .
       docker:
         dockerfile: ../Dockerfiles/Dockerfile.main
+    - &EMAIL
+      image: rishabh75/billsplit-email
+      context: ../../server/
       sync:
         manual:
-          - src: "src/**/*.js"
+          - src: src/**/*.js
             dest: .
-    - image: rishabh75/billsplit-email
-      context: ../../server/
       docker:
         dockerfile: ../Dockerfiles/Dockerfile.email
+    - &CRON
+      image: rishabh75/billsplit-email-cron
+      context: ../../server/
       sync:
         manual:
-          - src: "src/**/*.js"
+          - src: src/**/*.js
             dest: .
-    - image: rishabh75/billsplit-email-cron
-      context: ../../server/
       docker:
         dockerfile: ../Dockerfiles/Dockerfile.cron
+    - &CLIENT
+      image: rishabh75/billsplit-client
+      context: ../../client/
       sync:
         manual:
-          - src: "src/**/*.js"
+          - src: src/**/*.js
             dest: .
-    - image: rishabh75/billsplit-client
+      docker:
+        dockerfile: ../Dockerfiles/Dockerfile.client
+    - &CLIENT-PROD
+      image: rishabh75/billsplit-client-prod
       context: ../../client/
+      sync:
+        manual:
+          - src: src/**/*.js
+            dest: .
       docker:
         dockerfile: ../Dockerfiles/Dockerfile.client-prod
-      sync:
-        manual:
-          - src: "src/**/*.js"
-            dest: .
+  COMMON_ARTIFACTSETS:
+    DEFAULT_ARTIFACTS: &DEFAULT_ARTIFACTS
+      - *INTERNAL
+      - *EMAIL
+      - *CRON
+      - *CLIENT
+    DEV_ARTIFACTS: &DEV_ARTIFACTS
+      - *INTERNAL
+      - *EMAIL
+      - *CRON
+      - *CLIENT
+    PROD_ARTIFACTS: &PROD_ARTIFACTS
+      - *INTERNAL
+      - *EMAIL
+      - *CRON
+      - *CLIENT-PROD
+
+# Default Deployment
+build: &DEFAULT_BUILD
+  local:
+    push: false
+  artifacts: *DEFAULT_ARTIFACTS
+manifests:
+  rawYaml:
+    - ../k8s/common/*
+    - ../k8s/dev/*
+deploy: &DEFAULT_DEPLOY
+  statusCheckDeadlineSeconds: 900
+  kubectl: {}
+
+profiles:
+  - name: dev
+    manifests:
+      rawYaml:
+        - ../k8s/common/*
+        - ../k8s/dev/*
+    deploy:
+      kubectl: {}
+    # defaultNamespace: dev
+    build:
+      local:
+        push: false
+      artifacts: *DEV_ARTIFACTS
+
+  - name: prod
+    manifests:
+      rawYaml:
+        - ../k8s/common/*
+        # - ../k8s/certificate/*
+        - ../k8s/prod/*
+    deploy:
+      kubectl: {}
+    # defaultNamespace: prod
+    build:
+      tagPolicy:
+        gitCommit: {}
+        # dateTime: {}
+      artifacts: *PROD_ARTIFACTS
