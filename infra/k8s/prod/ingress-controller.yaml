@@ -5,11 +5,37 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/rewrite-target: /$1
+    # rewrite-target: /$1 -> /api/bill/v1.0/user/me -> /v1.0/user/me
+    cert-manager.io/cluster-issuer: "issuer-config"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
 
 spec:
   ingressClassName: nginx
+  tls:
+    - hosts:
+        - billsplit.app
+        - www.billsplit.app
+      secretName: billsplit-app
   rules:
-    - http:
+    - host: billsplit.app
+      http:
+        paths:
+          - path: /api/main/?(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: internal-svc
+                port:
+                  number: 9069
+          - path: /?(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: client-svc
+                port:
+                  number: 80
+    - host: www.billsplit.app
+      http:
         paths:
           - path: /api/main/?(.*)
             pathType: ImplementationSpecific

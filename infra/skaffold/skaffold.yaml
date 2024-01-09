@@ -85,8 +85,7 @@ profiles:
         - ../k8s/common/*
         - ../k8s/dev/*
     deploy:
-      kubectl: {}
-    # defaultNamespace: dev
+      kubectl: { defaultNamespace: billsplit-dev }
     build:
       local:
         push: false
@@ -96,15 +95,28 @@ profiles:
     manifests:
       rawYaml:
         - ../k8s/common/*
-        # - ../k8s/certificate/*
         - ../k8s/prod/*
     deploy:
-      kubectl: {}
-    # defaultNamespace: prod
+      kubectl: { defaultNamespace: billsplit-prod }
     build:
       local:
         push: true
       tagPolicy:
         gitCommit: {}
         # dateTime: {}
+      artifacts: *PROD_ARTIFACTS
+
+  - name: server
+    manifests:
+      rawYaml:
+        - ../k8s/common/*
+        # - ../k8s/certificate/*
+        - ../k8s/server/*
+    deploy:
+      kubectl: { defaultNamespace: billsplit-prod }
+    build:
+      local:
+        push: true
+      tagPolicy:
+        gitCommit: {}
       artifacts: *PROD_ARTIFACTS
