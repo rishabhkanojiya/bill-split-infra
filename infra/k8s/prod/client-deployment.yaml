@@ -17,7 +17,8 @@ spec:
           image: rishabh75/billsplit-client-prod
           env:
             - name: API_URL
-              value: "https://billsplit.app/api/main"
+              # value: "https://billsplit.app/api/main"
+              value: "https://20.246.254.93/api/main"
           ports:
             - containerPort: 80
 
