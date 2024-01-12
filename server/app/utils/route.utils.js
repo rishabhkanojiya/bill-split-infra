@@ -20,7 +20,7 @@ const routeUtils = {
         if (["development", "test"].includes(conf.env)) {
             req.org = {
                 _id: 1,
-                cloudName: "fynd-eg",
+                cloudName: "rishabh",
             };
             req.user = {
                 _id: 1,
